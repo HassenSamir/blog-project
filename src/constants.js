@@ -1,5 +1,8 @@
 export const BLOG_TITLE = 'Bits & Bytes';
+export const BLOG_DESCRIPTION = 'A wonderful blog about JavaScript';
 export const COLOR_THEME_COOKIE_NAME = 'color-theme';
+export const SITE_URL =
+  'https://blog-project-gcse4i8gw-samirs-projects-85e8355b.vercel.app';
 
 export const LIGHT_COLORS = {
   '--color-text': 'hsl(0deg 0% 5%)',
