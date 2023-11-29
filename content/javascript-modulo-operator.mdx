@@ -12,6 +12,7 @@ If you don't understand what it's doing, the values it produces seem completely 
 const what = 10 % 4; // 2
 const the = 10 % 10; // 0
 const heck = 4 % 10; // 4
+
 ```
 
 In this blog post, we're going to learn how this operator works by refining our mental model for division. We'll also cover a practical, every-day use case for this curious fella.
@@ -22,15 +23,14 @@ Suppose we have the following bit of arithmetic:
 
 ```js
 12 ÷ 4
+
 ```
 
 Division can often feel pretty abstract or theoretical, but there's a practical way to think about it: we want to divide a number into equally-sized groups.
 
 **Drag the slider to see how this operation can be visualized:**
 
-**TODO: Uncomment DivisionGroupsDemo**
-
-{/* <DivisionGroupsDemo /> */}
+<DivisionGroupsDemo /> 
 
 `12 ÷ 4` evaluates to `3`, because each group holds exactly 3 items. Essentially, we're figuring out how many items will be held inside each group.
 
@@ -48,9 +48,7 @@ This works if we're dividing up pizzas or cakes… **but what if the items are i
 
 In that case, we'd be able to fit 2 items into each group, and we'd be left with 3 additional items:
 
-**TODO: Uncomment DivisionGroupsDemo**
-
-{/* <DivisionGroupsDemo includeRemainderArea={true} numOfItems={11} initialNumOfGroups={4} /> */}
+<DivisionGroupsDemo includeRemainderArea={true} numOfItems={11} initialNumOfGroups={4} />
 
 **This is known as the _remainder_.** It's what the modulo operator produces.
 
@@ -74,9 +72,7 @@ Specifically, there's one sort of problem that I seem to run into a lot, where t
 
 For example, suppose we have an array of 3 colors. Each second, we want to switch to the next color in the list. When we reach the end of the list, we want to jump back to the first item:
 
-**TODO: Uncomment CircularColorsDemo**
-
-{/* <CircularColorsDemo /> */}
+<CircularColorsDemo />
 
 This is a surprisingly tricky problem. Suppose we have a variable called `timeElapsed` that starts at 0 and increments by 1 every second; we have to somehow map this ever-increasing value to an array with only 3 items.
 
@@ -95,6 +91,7 @@ getColor({ timeElapsed: 6 }); // 'red'
 getColor({ timeElapsed: 7 }); // 'yellow'
 getColor({ timeElapsed: 8 }); // 'blue'
 // ...And so on, forever
+
 ```
 
 Let's look at how the modulo operator can help us solve this problem:
@@ -107,6 +104,7 @@ function getColor({ timeElapsed }) {
 
   return COLORS[colorIndex];
 }
+
 ```
 
 Miraculously, this does exactly what we need! This method will always return one of the 3 colors, as long as `timeElapsed` is an integer. And it'll cycle through the 3 colors as `timeElapsed` increases.
@@ -123,6 +121,7 @@ const colorIndex = 5 % 3; // 2
 const colorIndex = 6 % 3; // 0
 const colorIndex = 7 % 3; // 1
 const colorIndex = 8 % 3; // 2
+
 ```
 
 We can then use this `colorIndex` to look up the color from the `COLORS` array. It's guaranteed to always cycle within the range of available indexes for that array.
