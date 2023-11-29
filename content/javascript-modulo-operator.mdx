@@ -12,7 +12,6 @@ If you don't understand what it's doing, the values it produces seem completely 
 const what = 10 % 4; // 2
 const the = 10 % 10; // 0
 const heck = 4 % 10; // 4
-
 ```
 
 In this blog post, we're going to learn how this operator works by refining our mental model for division. We'll also cover a practical, every-day use case for this curious fella.
@@ -23,7 +22,6 @@ Suppose we have the following bit of arithmetic:
 
 ```js
 12 ÷ 4
-
 ```
 
 Division can often feel pretty abstract or theoretical, but there's a practical way to think about it: we want to divide a number into equally-sized groups.
@@ -91,7 +89,6 @@ getColor({ timeElapsed: 6 }); // 'red'
 getColor({ timeElapsed: 7 }); // 'yellow'
 getColor({ timeElapsed: 8 }); // 'blue'
 // ...And so on, forever
-
 ```
 
 Let's look at how the modulo operator can help us solve this problem:
@@ -104,7 +101,6 @@ function getColor({ timeElapsed }) {
 
   return COLORS[colorIndex];
 }
-
 ```
 
 Miraculously, this does exactly what we need! This method will always return one of the 3 colors, as long as `timeElapsed` is an integer. And it'll cycle through the 3 colors as `timeElapsed` increases.
@@ -121,7 +117,6 @@ const colorIndex = 5 % 3; // 2
 const colorIndex = 6 % 3; // 0
 const colorIndex = 7 % 3; // 1
 const colorIndex = 8 % 3; // 2
-
 ```
 
 We can then use this `colorIndex` to look up the color from the `COLORS` array. It's guaranteed to always cycle within the range of available indexes for that array.

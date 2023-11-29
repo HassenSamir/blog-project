@@ -6,6 +6,7 @@ import { headers } from 'next/headers';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import DivisionGroupsDemo from '@/components/DivisionGroupsDemo';
 import CircularColorsDemo from '@/components/CircularColorsDemo';
+import CodeSnippet from '@/components/CodeSnippet';
 
 const getBlogPost = React.cache(async (slug) => {
   return await loadBlogPost(slug);
@@ -36,6 +37,7 @@ async function BlogPost() {
         <MDXRemote
           source={content}
           components={{
+            pre: CodeSnippet,
             DivisionGroupsDemo,
             CircularColorsDemo,
           }}
