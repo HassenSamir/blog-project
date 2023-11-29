@@ -12,14 +12,10 @@ const DivisionGroupsDemo = dynamic(() =>
   import('@/components/DivisionGroupsDemo')
 );
 
-const getBlogPost = React.cache(async (slug) => {
-  return await loadBlogPost(slug);
-});
-
 export const generateMetadata = async ({ params }) => {
   const {
     frontmatter: { title, abstract },
-  } = await getBlogPost(params.postSlug);
+  } = await loadBlogPost(params.postSlug);
   return {
     title: `${title} · ${BLOG_TITLE}`,
     description: abstract,
@@ -30,7 +26,7 @@ async function BlogPost({ params }) {
   const {
     frontmatter: { title, publishedOn },
     content,
-  } = await getBlogPost(params.postSlug);
+  } = await loadBlogPost(params.postSlug);
 
   return (
     <article className={styles.wrapper}>
