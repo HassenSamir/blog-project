@@ -19,7 +19,7 @@ function CircularColorsDemo() {
   const [isTimerRunning, setIsTimerRunning] = React.useState(false);
   const [timeElapsed, setTimeElapsed] = React.useState(0);
 
-  const selectedColor = COLORS[timeElapsed % 3];
+  const selectedColor = COLORS[timeElapsed % COLORS.length];
 
   const toggleTimerState = () => {
     setIsTimerRunning((state) => !state);
@@ -81,7 +81,7 @@ function CircularColorsDemo() {
         <div className={styles.actions}>
           <button onClick={toggleTimerState}>
             {isTimerRunning ? <Pause /> : <Play />}
-            <VisuallyHidden>Play</VisuallyHidden>
+            <VisuallyHidden>{isTimerRunning ? 'Pause' : 'Play'}</VisuallyHidden>
           </button>
           <button onClick={resetTimer}>
             <RotateCcw />

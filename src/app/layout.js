@@ -2,7 +2,11 @@ import React from 'react';
 import { Work_Sans, Spline_Sans_Mono } from 'next/font/google';
 import clsx from 'clsx';
 import { cookies } from 'next/headers';
-import { LIGHT_TOKENS, DARK_TOKENS } from '@/constants';
+import {
+  LIGHT_TOKENS,
+  DARK_TOKENS,
+  COLOR_THEME_COOKIE_NAME,
+} from '@/constants';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -23,7 +27,7 @@ const monoFont = Spline_Sans_Mono({
 });
 
 function RootLayout({ children }) {
-  const savedTheme = cookies().get('color-theme');
+  const savedTheme = cookies().get(COLOR_THEME_COOKIE_NAME);
   const theme = savedTheme?.value || 'light';
 
   const themeColors = theme === 'light' ? LIGHT_TOKENS : DARK_TOKENS;
@@ -37,7 +41,7 @@ function RootLayout({ children }) {
         style={themeColors}
       >
         <body>
-          <Header theme={theme} />
+          <Header initialTheme={theme} />
           <main>{children}</main>
           <Footer />
         </body>

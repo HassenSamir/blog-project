@@ -8,24 +8,28 @@ import Logo from '@/components/Logo';
 import VisuallyHidden from '@/components/VisuallyHidden';
 
 import styles from './Header.module.css';
-import { LIGHT_TOKENS, DARK_TOKENS } from '@/constants';
+import {
+  LIGHT_TOKENS,
+  DARK_TOKENS,
+  COLOR_THEME_COOKIE_NAME,
+} from '@/constants';
 
-function Header({ theme, className, ...delegated }) {
-  const [selectedTheme, setSelectedTheme] = React.useState(theme);
+function Header({ initialTheme, className, ...delegated }) {
+  const [selectedTheme, setSelectedTheme] = React.useState(initialTheme);
 
   const toggleTheme = () => {
     const nextTheme = selectedTheme === 'light' ? 'dark' : 'light';
     setSelectedTheme(nextTheme);
 
-    Cookie.set('color-theme', nextTheme, {
+    Cookie.set(COLOR_THEME_COOKIE_NAME, nextTheme, {
       expires: 1000,
     });
 
+    const newTokens = nextTheme === 'light' ? LIGHT_TOKENS : DARK_TOKENS;
     const root = document.documentElement;
-    const colors = nextTheme === 'light' ? LIGHT_TOKENS : DARK_TOKENS;
 
     root.setAttribute('data-color-theme', nextTheme);
-    Object.entries(colors).forEach(([key, value]) => {
+    Object.entries(newTokens).forEach(([key, value]) => {
       root.style.setProperty(key, value);
     });
   };
