@@ -3,10 +3,14 @@ import BlogHero from '@/components/BlogHero';
 import styles from './postSlug.module.css';
 import { loadBlogPost } from '@/helpers/file-helpers';
 import { headers } from 'next/headers';
+import dynamic from 'next/dynamic';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import DivisionGroupsDemo from '@/components/DivisionGroupsDemo';
 import CircularColorsDemo from '@/components/CircularColorsDemo';
 import CodeSnippet from '@/components/CodeSnippet';
+
+const DivisionGroupsDemo = dynamic(() =>
+  import('@/components/DivisionGroupsDemo')
+);
 
 const getBlogPost = React.cache(async (slug) => {
   return await loadBlogPost(slug);

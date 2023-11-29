@@ -8,23 +8,19 @@ import SliderControl from '@/components/SliderControl';
 
 import Equation from './Equation';
 import styles from './DivisionGroupsDemo.module.css';
+import { LayoutGroup, motion } from 'framer-motion';
 
 function DivisionGroupsDemo({
   numOfItems = 12,
   initialNumOfGroups = 1,
   includeRemainderArea,
 }) {
-  const [numOfGroups, setNumOfGroups] = React.useState(
-    initialNumOfGroups
-  );
+  const uniqueId = React.useId();
+  const [numOfGroups, setNumOfGroups] = React.useState(initialNumOfGroups);
 
-  const numOfItemsPerGroup = Math.floor(
-    numOfItems / numOfGroups
-  );
+  const numOfItemsPerGroup = Math.floor(numOfItems / numOfGroups);
 
-  const remainder = includeRemainderArea
-    ? numOfItems % numOfGroups
-    : null;
+  const remainder = includeRemainderArea ? numOfItems % numOfGroups : null;
 
   // When we're splitting into 1-3 groups, display side-by-side
   // columns. When we get to 4, it should switch to a 2x2 grid.
@@ -48,43 +44,50 @@ function DivisionGroupsDemo({
           min={1}
           max={4}
           value={numOfGroups}
-          onChange={(ev) =>
-            setNumOfGroups(Number(ev.target.value))
-          }
+          onChange={(ev) => setNumOfGroups(Number(ev.target.value))}
         />
       </header>
 
       <div className={styles.demoWrapper}>
-        <div
-          className={clsx(styles.demoArea)}
-          style={gridStructure}
-        >
-          {range(numOfGroups).map((groupIndex) => (
-            <div key={groupIndex} className={styles.group}>
-              {range(numOfItemsPerGroup).map((index) => {
-                return (
-                  <div
-                    key={index}
-                    className={styles.item}
-                  />
-                );
-              })}
-            </div>
-          ))}
+        <div className={clsx(styles.demoArea)} style={gridStructure}>
+          <LayoutGroup>
+            {range(numOfGroups).map((groupIndex) => (
+              <div key={groupIndex} className={styles.group}>
+                {range(numOfItemsPerGroup).map((index) => {
+                  const startIndex = numOfItemsPerGroup * groupIndex;
+                  const layoutId = `${uniqueId}-${index + startIndex}`;
+                  return (
+                    <motion.div
+                      layoutId={layoutId}
+                      transition={SPRING}
+                      key={layoutId}
+                      className={styles.item}
+                    />
+                  );
+                })}
+              </div>
+            ))}
+          </LayoutGroup>
         </div>
       </div>
 
       {includeRemainderArea && (
         <div className={styles.remainderArea}>
-          <p className={styles.remainderHeading}>
-            Remainder Area
-          </p>
-
-          {range(remainder).map((index) => {
-            return (
-              <div key={index} className={styles.item} />
-            );
-          })}
+          <p className={styles.remainderHeading}>Remainder Area</p>
+          <LayoutGroup>
+            {range(remainder).map((index) => {
+              const lastIndex = numOfItems - (index + 1);
+              const layoutId = `${uniqueId}-${lastIndex}`;
+              return (
+                <motion.div
+                  layoutId={layoutId}
+                  transition={SPRING}
+                  key={index}
+                  className={styles.item}
+                />
+              );
+            })}
+          </LayoutGroup>
         </div>
       )}
 
@@ -96,5 +99,11 @@ function DivisionGroupsDemo({
     </Card>
   );
 }
+
+const SPRING = {
+  type: 'spring',
+  stiffness: 400,
+  damping: 60,
+};
 
 export default DivisionGroupsDemo;
