@@ -2,7 +2,6 @@ import React from 'react';
 import BlogHero from '@/components/BlogHero';
 import styles from './postSlug.module.css';
 import { loadBlogPost } from '@/helpers/file-helpers';
-import { headers } from 'next/headers';
 import dynamic from 'next/dynamic';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import CircularColorsDemo from '@/components/CircularColorsDemo';
@@ -26,13 +25,11 @@ export const generateMetadata = async ({ params }) => {
   };
 };
 
-async function BlogPost() {
-  const headersList = headers();
-  const pathname = headersList.get('x-invoke-path').slice(1) || '';
+async function BlogPost({ params }) {
   const {
     frontmatter: { title, publishedOn },
     content,
-  } = await getBlogPost(pathname);
+  } = await getBlogPost(params.postSlug);
 
   return (
     <article className={styles.wrapper}>
